@@ -20,10 +20,9 @@ class _AddRecipeState extends State<AddRecipe> {
   final _formkey = GlobalKey<FormState>();
   late Recipe rec;
 
-
   @override
   Widget build(BuildContext context) {
-    RecipeProvider recipeProvider = Provider.of<RecipeProvider>(context);
+    // RecipeProvider recipeProvider = Provider.of<RecipeProvider>(context);
 
     return Scaffold(
       drawer: Drawer(
@@ -47,8 +46,7 @@ class _AddRecipeState extends State<AddRecipe> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                  },
+                  onChanged: (value) {},
                   controller: nameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -108,6 +106,7 @@ class _AddRecipeState extends State<AddRecipe> {
                             price: double.parse(priceController.text),
                           );
                           context.read<RecipeProvider>().addRecipe(rec);
+                          context.read<RecipeProvider>().viewRecipes();
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const HomePage(),
