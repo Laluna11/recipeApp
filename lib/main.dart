@@ -6,13 +6,16 @@ import 'Recipes.dart';
 import 'Widgets/widgets.dart';
 
 void main() {
-  runApp(MultiProvider(
+  runApp(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => RecipeProvider(),
         ),
       ],
-      child: const MyApp()));
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Food Recipes',
       theme: ThemeData(
@@ -27,7 +31,6 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
-
     );
   }
 }
@@ -37,6 +40,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<RecipeProvider>().viewRecipes();
+
     return Scaffold(
       drawer: Drawer(
         child: showDrawer(context),
