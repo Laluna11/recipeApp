@@ -32,7 +32,6 @@ class _DetailsState extends State<Details> {
 
   switching() {
     Future.delayed(const Duration(seconds: 1), () {
-      print('ON - OF');
       setState(() {
         on = !on;
       });
@@ -58,7 +57,12 @@ class _DetailsState extends State<Details> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.all(60),
+              margin: const EdgeInsets.only(
+                top: 10,
+                left: 50,
+                right: 50,
+                bottom: 20,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
@@ -87,6 +91,139 @@ class _DetailsState extends State<Details> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Container(
+              margin: EdgeInsets.all(20),
+              constraints: const BoxConstraints(
+                maxWidth: 350,
+                maxHeight: 150,
+                minHeight: 150,
+                minWidth: 350,
+              ),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.yellow,
+                    blurRadius: 20,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                  BoxShadow(
+                    color: Colors.orange,
+                    blurRadius: 15,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+                shape: BoxShape.rectangle,
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.black,
+                    width: 3,
+                  ),
+                  left: BorderSide(
+                    color: Colors.black,
+                    width: 3,
+                  ),
+                  bottom: BorderSide(
+                    color: Colors.black,
+                    width: 3,
+                  ),
+                  right: BorderSide(
+                    color: Colors.black,
+                    width: 3,
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Name : ",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          context.watch<RecipeProvider>().data[recipe].name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Description : ",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          context.watch<RecipeProvider>().data[recipe].desc,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Price : ",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          "${context.watch<RecipeProvider>().data[recipe].price} LBP",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Back",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
