@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_menu/Provider/recipes_provider.dart';
+import 'package:food_menu/update_recipe.dart';
 import 'package:food_menu/view_recipe.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _AllRecipesState extends State<AllRecipes> {
       future: future(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
+          var rec = Provider.of<RecipeProvider>(context, listen: false);
           return ListView.builder(
             itemCount: context.watch<RecipeProvider>().data.length,
             itemBuilder: (BuildContext context, int index) {
@@ -43,6 +45,9 @@ class _AllRecipesState extends State<AllRecipes> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => const Details(),
+                                    settings: RouteSettings(
+                                      arguments: index,
+                                    ),
                                   ),
                                 );
                               },
@@ -51,12 +56,40 @@ class _AllRecipesState extends State<AllRecipes> {
                               ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: () async{
-                              // int? id = context.watch<RecipeProvider>().data[index].id;
-                              // await Data.instance.delete(id);
-                            },
-                            icon: const Icon(Icons.delete),
+                          Expanded(
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => Update(
+                                      id: rec.data[index].id,
+                                      name: rec.data[index].name,
+                                      desc: rec.data[index].desc,
+                                      price: rec.data[index].price,
+                                    ),
+                                    settings: RouteSettings(
+                                      arguments: rec.data[index].id,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.edit),
+                            ),
+                          ),
+                          Expanded(
+                            child: IconButton(
+                              onPressed: () async {
+                                // var id = context
+                                //     .watch<RecipeProvider>()
+                                //     .data[index]
+                                //     .id;
+                                var id = rec.data[index].id;
+                                await rec.deleteRecipe(id);
+                                setState(() {});
+                                // await Data.instance.delete(id);
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
                           ),
                         ],
                       ),
@@ -81,6 +114,5 @@ class _AllRecipesState extends State<AllRecipes> {
         );
       },
     );
-
   }
 }

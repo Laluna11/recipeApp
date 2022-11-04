@@ -73,7 +73,7 @@ class Data {
     return result.map((json) => Recipe.fromJson(json)).toList();
   }
 
-  Future<int> update(Recipe recipe) async {
+  Future<int> update(Recipe recipe ) async {
     final db = await instance.database;
     return db.update(
       recipeTable,
@@ -83,14 +83,13 @@ class Data {
     );
   }
 
-  Future<int> delete(int? id) async {
+  Future<int> delete(int id) async {
     final db = await instance.database;
     return await db.delete(
       recipeTable,
       where: '${RecipeFields.id} = ?',
       whereArgs: [id],
     );
-
   }
 
   Future close() async {

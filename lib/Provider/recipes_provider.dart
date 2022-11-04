@@ -7,10 +7,11 @@ import '../Models/Recipe.dart';
 
 class RecipeProvider with ChangeNotifier {
   final List<Recipe> _recipe = [];
-   List<Recipe> data = [];
+  List<Recipe> data = [];
+
   // String realTimeString = '';
 
-  UnmodifiableListView<Recipe> get recipe => UnmodifiableListView(_recipe);
+  List<Recipe> get recipe => UnmodifiableListView(_recipe);
 
   addRecipe(Recipe recipe) async {
     // _recipe.add(recipe);
@@ -37,17 +38,31 @@ class RecipeProvider with ChangeNotifier {
     }
   }
 
-  getRecipeById(index)async {
+  getRecipeById(index) async {
     return await Data.instance.getRecipe(index);
   }
 
-  deleteRecipe(index) async {
-    try{
-      int a = await Data.instance.delete(index);
-      print(a);
-    }catch(e){
+  updateRecipe(Recipe recipe) async {
+    print("UPDATE:::");
+    print(recipe.id);
+    print(recipe.name);
+    print(recipe.desc);
+    print(recipe.price);
+
+    return await Data.instance.update(recipe);
+  }
+
+  deleteRecipe(int? id) async {
+    try {
+      print(id);
+      if (id == null) {
+        return;
+      }
+      return await Data.instance.delete(id);
+    } catch (e) {
       print(e);
     }
     notifyListeners();
   }
+
 }
